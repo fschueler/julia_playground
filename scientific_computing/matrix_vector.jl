@@ -234,7 +234,7 @@ function matvec_tr2(A, x, n)
 end
 
 # tridiagonal parallelized with branches
-function matvec_trp(A, X, n)
+function matvec_trp(A, x, n)
   y = zeros(eltype(x), n)
   @parallel for i = 1:n
     if (i == 1)
@@ -351,13 +351,13 @@ function timeit(n, reps)
 
   # tridiagonal ifelse
   time = @elapsed for j in 1:reps
-      y += matvec_tr(A, x, n)
+      y += matvec_tr2(A, x, n)
   end
   println("matvec_tr (branch)   | ",time/reps)
 
   # tridiagonal
   time = @elapsed for j in 1:reps
-      y += matvec_tr(A, x, n)
+      y += matvec_trp(A, x, n)
   end
   println("matvec_tr (parallel) | ",time/reps)
 end
