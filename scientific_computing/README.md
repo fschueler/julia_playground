@@ -22,3 +22,21 @@ matvec_c (par)       | 0.11783382964
 matvec_tr            | 8.5216e-5
 matvec_tr (branch)   | 5.158172e-5
 matvec_tr (parallel) | 1.478144e-5
+
+----------------------------------
+        Timings for C = AB        
+        N=512, reps=5
+----------------------------------
+algorithm               | time (s)
+------------------------|------------------------
+matmult_ijk             | 0.535462381
+matmult_jik             | 0.6823360774
+matmult_kij             | 1.0624259249999999
+matmult_kji             | 0.33370950320000003
+matmult_ikj             | 1.3030522402
+matmult_jki             | 0.320226846
+matmult_jki (blocked)   | 0.4504516938
+matmult_jki (bl, simd)  | 0.5144411973999999
+matmult_jik (2dbl, s)   | 0.2783084628
+matmult_jik (2dbl)      | 0.485824767
+matmult_jik (2dbl+s+u)  | 0.1493436022
