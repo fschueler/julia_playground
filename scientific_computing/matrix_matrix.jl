@@ -179,6 +179,11 @@ function matmult_jikb3(A, B, n)
   C
 end
 
+function matmult_gemm(A, B, n)
+  C = zeros(eltype(A), n, n)
+  LinAlg.BLAS.gemm!(false, false, 1.0, A, B, false, C)
+end
+
 function timeit(n, reps)
   C = zeros(Float64, n, n)
   B = rand(Float64, n, n)
