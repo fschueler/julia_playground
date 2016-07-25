@@ -7,7 +7,7 @@ function matmult_ijk(A, B, n)
   for i = 1:n
     for j = 1:n
       for k = 1:n
-        C[i,j] = A[i,k] * B[k,j]
+        C[i,j] = C[i,j] + A[i,k] * B[k,j]
       end
     end
   end
@@ -181,7 +181,7 @@ end
 
 function matmult_gemm(A, B, n)
   C = zeros(eltype(A), n, n)
-  LinAlg.BLAS.gemm!(false, false, 1.0, A, B, false, C)
+  LinAlg.BLAS.gemm!('n', 'n', 1.0, A, B, 1.0, C)
 end
 
 function timeit(n, reps)
@@ -249,6 +249,11 @@ function timeit(n, reps)
     C += matmult_jikb3(A, B, n)
   end
   println("matmult_jik (2dbl+s+u)  | ",time/reps)
+
+  time = @elapsed for j in 1:reps
+    C += matmult_gemm(A, B, n)
+  end
+  println("matmult_gemm            | ",time/reps)
 end
 
 const N  = 2^9   # number of elements of x, y, A is N*N
